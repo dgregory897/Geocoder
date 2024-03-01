@@ -17,7 +17,7 @@ import numpy as np
     #The code uses Streamlit to create a web application. 
     #It sets the title of the application to “Geocoding Application in Python” and displays a markdown message instructing the user to upload a CSV file with address columns.
 st.title('Geocoding Application in Python')
-st.markdown('Upload a CSV/xlsx File with address columns (Street name & number | Postcode | City)')
+st.markdown('Upload a CSV File of your full addresses (e.g. the columns: Site Name |Address)')
 
 # 3. Function Definitions:
     #The code defines several functions used within the application:
