@@ -2,6 +2,8 @@
     #The code imports various libraries such as time, base64, streamlit, pandas, geopandas, geopy, plotly_express, and numpy.
     #These libraries are necessary for performing geocoding, data manipulation, visualization, and web application development.
 import time
+import random
+import string
 import base64
 import streamlit as st
 import pandas as pd
@@ -17,7 +19,7 @@ import numpy as np
     #The code uses Streamlit to create a web application. 
     #It sets the title of the application to “Geocoding Application in Python” and displays a markdown message instructing the user to upload a CSV file with address columns.
 st.title('Geocoding Application in Python')
-st.markdown('Upload a CSV File of your full addresses (e.g. the columns: Site Name | Address)')
+st.markdown('Upload a CSV/xlsx File with address columns (Street name & number | Postcode | City)')
 
 # 3. Function Definitions:
     #The code defines several functions used within the application:
@@ -33,7 +35,9 @@ def choose_geocode_column(df):
     return df
 
 def geocode(df):
-    locator = Nominatim(user_agent="DG")
+    letters = string.ascii_lowercase
+    username = ''.join(random.choice(letters) for i in range(10))
+    locator = Nominatim(user_agent=username)
     geocode = RateLimiter(locator.geocode, min_delay_seconds=1)
     df["location"] = df["geocode_col"].apply(geocode)
     df["point"] = df["location"].apply(lambda loc: tuple(loc.point) if loc else None)
