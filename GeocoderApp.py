@@ -18,8 +18,9 @@ import numpy as np
 # 2. Streamlit Application Setup:
     #The code uses Streamlit to create a web application. 
     #It sets the title of the application to “Geocoding Application in Python” and displays a markdown message instructing the user to upload a CSV file with address columns.
-st.title('Geocoding Application in Python')
-st.markdown('Upload a CSV/xlsx File with address columns (Street name & number | Postcode | City)')
+st.title('Geocoding Application: Convert Addresses into Coordinates')
+st.markdown('Upload a CSV File containing your addresses.')
+st.markdown('Addresses can be contained within a single column, or split by component into multiple columns (e.g., Street name & number | City | Postcode etc.)')
 
 # 3. Function Definitions:
     #The code defines several functions used within the application:
@@ -88,9 +89,9 @@ def create_address_col(df):
     df["geocode_col"] = (
         df[address_name].astype(str)
         + ","
-        + df[post_code]
-        + ","
         + df[city]
+        + ","
+        + df[post_code]
         + ","
         + country
     )
@@ -118,16 +119,17 @@ def main():
 
         cols = df.columns.tolist()
 
-        st.subheader("Choose Address Columns from the Sidebar")
+        st.subheader("Please select how your addresses are structured")
         st.info("Example correct address: 221 Baker Street, London, NW1 6XE")
 
-        if st.checkbox("If your addresses are formatted like the example above"):
+        if st.checkbox("Select if your addresses are formatted like the example above"):
+            st.subheader("From the dropdown, choose the column containing the addresses")
             df_address = choose_geocode_column(df)
             st.write(df_address["geocode_col"].head())
             geocoded_df = geocode(df_address)
             display_results(geocoded_df)
 
-        if st.checkbox("Tick if addresses are broken up into multiple columns (e.g. street, city, postcode, country)"):
+        if st.checkbox("Select if addresses are broken up into multiple columns (e.g. street, city, postcode, country)"):
             df_address = create_address_col(df)
             st.write(df_address["geocode_col"].head())
             geocoded_df = geocode(df_address)
