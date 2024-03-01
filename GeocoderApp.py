@@ -119,15 +119,15 @@ def main():
         cols = df.columns.tolist()
 
         st.subheader("Choose Address Columns from the Sidebar")
-        st.info("Example correct address: Karlaplan 13,115 20,STOCKHOLM, Sweden")
+        st.info("Example correct address: 221 Baker Street, London, NW1 6XE")
 
-        if st.checkbox("Address Formatted correctly (Example Above)"):
+        if st.checkbox("If your addresses are formatted like the example above"):
             df_address = choose_geocode_column(df)
             st.write(df_address["geocode_col"].head())
             geocoded_df = geocode(df_address)
             display_results(geocoded_df)
 
-        if st.checkbox("Not Correctly Formatted"):
+        if st.checkbox("Tick if addresses are broken up into multiple columns (e.g. street, city, postcode, country)"):
             df_address = create_address_col(df)
             st.write(df_address["geocode_col"].head())
             geocoded_df = geocode(df_address)
