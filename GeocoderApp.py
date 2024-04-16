@@ -13,13 +13,14 @@ from geopy.geocoders import Nominatim
 from geopy.extra.rate_limiter import RateLimiter
 import plotly_express as px
 import numpy as np
+import openpyxl
 
 # ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 # 2. Streamlit Application Setup:
     #The code uses Streamlit to create a web application. 
     #It sets the title of the application to “Geocoding Application in Python” and displays a markdown message instructing the user to upload a CSV file with address columns.
 st.title('Geocoding Application: Convert Addresses into Coordinates')
-st.markdown('Upload a CSV File containing your addresses.')
+st.markdown('Upload a CSV or Excel File containing your addresses.')
 st.markdown('Addresses can be contained within a single column, or split by component into multiple columns (e.g., Street name & number | City | Postcode etc.)')
 
 # 3. Function Definitions:
