@@ -80,20 +80,20 @@ def display_results(gdf):
 def create_address_col(df):
     st.sidebar.title("Select Address columns")
     st.sidebar.info(
-        "You need to select address column (Street name and number), post code and City"
+        "You need to select address column (street name and number), post code, city & country"
     )
     address_name = st.sidebar.selectbox("Select Address column", df.columns.tolist())
     post_code = st.sidebar.selectbox("Select Post Code Column", df.columns.tolist())
     city = st.sidebar.selectbox("Select the City Column", df.columns.tolist())
-    country = st.sidebar.selectbox("Select the country of the addresses", df.columns.tolist())
+    country = st.sidebar.selectbox("Select the Country of the addresses", df.columns.tolist())
     df["geocode_col"] = (
         df[address_name].astype(str)
         + ","
-        + df[city]
+        + df[city].astype(str)
         + ","
         + df[post_code]
         + ","
-        + df[country]
+        + df[country].astype(str)
     )
     return df
 
