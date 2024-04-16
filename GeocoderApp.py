@@ -88,11 +88,11 @@ def create_address_col(df):
     post_code = st.sidebar.selectbox("Select Post Code Column", df.columns.tolist())
     df["geocode_col"] = (
         df[address_name].astype(str)
-        + ", "
+        + ","
         + df[city].astype(str)
-        + ", "
+        + ","
         + df[country]
-        + ", "
+        + ","
         + df[post_code]
         
     )
