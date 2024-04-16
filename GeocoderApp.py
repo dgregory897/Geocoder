@@ -110,10 +110,19 @@ def main():
     file = st.file_uploader("Choose a file")
     if file is not None:
         file.seek(0)
-        df = pd.read_csv(file, low_memory=False)
-        with st.spinner("Reading CSV File..."):
+        file_extension = file.name.split('.')[-1].lower()
+        if file_extension == 'csv':
+            df = pd.read_csv(file, low_memory=False, delimiter='[,;]')
+        elif file_extension in ['xls', 'xlsx']:
+            df = pd.read_excel(file, engine='openpyxl')
+        else:
+            st.error("Unsupported file format. Please upload a CSV or Excel file.")
+            return
+
+        with st.spinner("Reading File..."):
             time.sleep(5)
             st.success("Done!")
+        
         st.write(df.head())
         st.write(df.shape)
 
