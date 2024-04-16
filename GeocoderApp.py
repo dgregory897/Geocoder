@@ -91,7 +91,7 @@ def create_address_col(df):
         + ", "
         + df[city].astype(str)
         + ", "
-        + df[country].astype(str)
+        + df[country]
         + ", "
         + df[post_code]
         
