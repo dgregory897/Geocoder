@@ -18,14 +18,9 @@ import numpy as np
 # 2. Streamlit Application Setup:
     #The code uses Streamlit to create a web application. 
     #It sets the title of the application to “Geocoding Application in Python” and displays a markdown message instructing the user to upload a CSV file with address columns.
-<<<<<<< HEAD
 st.title('Geocoding Application: Convert Addresses into Coordinates')
-st.markdown('Upload a CSV or Excel File containing your addresses.')
+st.markdown('Upload a CSV File containing your addresses.')
 st.markdown('Addresses can be contained within a single column, or split by component into multiple columns (e.g., Street name & number | City | Postcode etc.)')
-=======
-st.title('Geocoding Application in Python')
-st.markdown('Upload a CSV/xlsx File with address columns (Street name & number | Postcode | City)')
->>>>>>> parent of 13e21b8 (Update GeocoderApp.py)
 
 # 3. Function Definitions:
     #The code defines several functions used within the application:
@@ -85,80 +80,19 @@ def display_results(gdf):
 def create_address_col(df):
     st.sidebar.title("Select Address columns")
     st.sidebar.info(
-        "You need to select address column (street name and number), post code, city & country"
+        "You need to select address column (Street name and number), post code and City"
     )
     address_name = st.sidebar.selectbox("Select Address column", df.columns.tolist())
-    city = st.sidebar.selectbox("Select the City Column", df.columns.tolist())
-    country = st.sidebar.selectbox("Select the Country of the addresses", df.columns.tolist())
     post_code = st.sidebar.selectbox("Select Post Code Column", df.columns.tolist())
+    city = st.sidebar.selectbox("Select the City Column", df.columns.tolist())
+    country = st.sidebar.text_input("Write the country of the addresses")
     df["geocode_col"] = (
         df[address_name].astype(str)
         + ","
-<<<<<<< HEAD
-        + df[city].astype(str)
-        + ","
-        + df[country]
-        + ","
-        + df[post_code]
-        
-=======
-        + df[post_code]
-        + ","
         + df[city]
         + ","
+        + df[post_code]
+        + ","
         + country
->>>>>>> parent of 13e21b8 (Update GeocoderApp.py)
     )
     return df
-
-
-# 4. Main Function:
-    #The main() function handles the main execution of the Streamlit application:
-        ##It allows the user to upload a CSV file using st.file_uploader().
-        ##If a file is uploaded, it reads the CSV file into a DataFrame (df).
-        ##It displays the uploaded DataFrame and its shape in the Streamlit application.
-        ##It provides checkboxes for the user to select the address format: correctly formatted or not.
-        ##If the address format is selected correctly, it calls choose_geocode_column() to choose the geocode column, performs geocoding using geocode(), and displays the geocoded results using display_results().
-        ##If the address format is not correct, it calls create_address_col() to create the geocode column, performs geocoding using geocode(), and displays the geocoded results using display_results().
-def main():
-    file = st.file_uploader("Choose a file")
-    if file is not None:
-        file_extension = file.name.split('.')[-1].lower()
-        if file_extension == 'csv':
-            df = pd.read_csv(file, low_memory=False, delimiter='[,;]')
-        elif file_extension in ['xls', 'xlsx']:
-            df = pd.read_excel(file, engine='openpyxl')
-        else:
-            st.error("Unsupported file format. Please upload a CSV or Excel file.")
-            return
-
-        with st.spinner("Reading File..."):
-            time.sleep(5)
-            st.success("Done!")
-        
-        st.write(df.head())
-        st.write(df.shape)
-
-        cols = df.columns.tolist()
-
-        st.subheader("Choose Address Columns from the Sidebar")
-        st.info("Example correct address: 221 Baker Street, London, NW1 6XE")
-
-        if st.checkbox("If your addresses are formatted like the example above"):
-            df_address = choose_geocode_column(df)
-            st.write(df_address["geocode_col"].head())
-            geocoded_df = geocode(df_address)
-            display_results(geocoded_df)
-
-        if st.checkbox("Tick if addresses are broken up into multiple columns (e.g. street, city, postcode, country)"):
-            df_address = create_address_col(df)
-            st.write(df_address["geocode_col"].head())
-            geocoded_df = geocode(df_address)
-            display_results(geocoded_df)
-
-if __name__ == "__main__":
-    main()
-
-
-
-
