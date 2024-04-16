@@ -14,7 +14,6 @@ from geopy.extra.rate_limiter import RateLimiter
 import plotly_express as px
 import numpy as np
 
-
 # ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 # 2. Streamlit Application Setup:
     #The code uses Streamlit to create a web application. 
