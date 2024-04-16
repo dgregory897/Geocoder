@@ -109,7 +109,6 @@ def create_address_col(df):
 def main():
     file = st.file_uploader("Choose a file")
     if file is not None:
-        file.seek(0)
         file_extension = file.name.split('.')[-1].lower()
         if file_extension == 'csv':
             df = pd.read_csv(file, low_memory=False, delimiter='[,;]')
