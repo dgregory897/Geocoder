@@ -96,3 +96,44 @@ def create_address_col(df):
         + country
     )
     return df
+
+
+# 4. Main Function:
+    #The main() function handles the main execution of the Streamlit application:
+        ##It allows the user to upload a CSV file using st.file_uploader().
+        ##If a file is uploaded, it reads the CSV file into a DataFrame (df).
+        ##It displays the uploaded DataFrame and its shape in the Streamlit application.
+        ##It provides checkboxes for the user to select the address format: correctly formatted or not.
+        ##If the address format is selected correctly, it calls choose_geocode_column() to choose the geocode column, performs geocoding using geocode(), and displays the geocoded results using display_results().
+        ##If the address format is not correct, it calls create_address_col() to create the geocode column, performs geocoding using geocode(), and displays the geocoded results using display_results().
+def main():
+    file = st.file_uploader("Choose a file")
+    if file is not None:
+        file.seek(0)
+        df = pd.read_csv(file, low_memory=False)
+        with st.spinner("Reading CSV File..."):
+            time.sleep(5)
+            st.success("Done!")
+        st.write(df.head())
+        st.write(df.shape)
+
+        cols = df.columns.tolist()
+
+        st.subheader("Please select how your addresses are structured")
+        st.info("Example correct address: 221 Baker Street, London, NW1 6XE")
+
+        if st.checkbox("Select if your addresses are formatted like the example above"):
+            st.subheader("From the dropdown, choose the column containing the addresses")
+            df_address = choose_geocode_column(df)
+            st.write(df_address["geocode_col"].head())
+            geocoded_df = geocode(df_address)
+            display_results(geocoded_df)
+
+        if st.checkbox("Select if addresses are broken up into multiple columns (e.g. street, city, postcode, country)"):
+            df_address = create_address_col(df)
+            st.write(df_address["geocode_col"].head())
+            geocoded_df = geocode(df_address)
+            display_results(geocoded_df)
+
+if __name__ == "__main__":
+    main()
