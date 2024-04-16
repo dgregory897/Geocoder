@@ -18,9 +18,14 @@ import numpy as np
 # 2. Streamlit Application Setup:
     #The code uses Streamlit to create a web application. 
     #It sets the title of the application to “Geocoding Application in Python” and displays a markdown message instructing the user to upload a CSV file with address columns.
+<<<<<<< HEAD
 st.title('Geocoding Application: Convert Addresses into Coordinates')
 st.markdown('Upload a CSV or Excel File containing your addresses.')
 st.markdown('Addresses can be contained within a single column, or split by component into multiple columns (e.g., Street name & number | City | Postcode etc.)')
+=======
+st.title('Geocoding Application in Python')
+st.markdown('Upload a CSV/xlsx File with address columns (Street name & number | Postcode | City)')
+>>>>>>> parent of 13e21b8 (Update GeocoderApp.py)
 
 # 3. Function Definitions:
     #The code defines several functions used within the application:
@@ -89,12 +94,20 @@ def create_address_col(df):
     df["geocode_col"] = (
         df[address_name].astype(str)
         + ","
+<<<<<<< HEAD
         + df[city].astype(str)
         + ","
         + df[country]
         + ","
         + df[post_code]
         
+=======
+        + df[post_code]
+        + ","
+        + df[city]
+        + ","
+        + country
+>>>>>>> parent of 13e21b8 (Update GeocoderApp.py)
     )
     return df
 
