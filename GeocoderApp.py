@@ -45,12 +45,12 @@ def geocode(df):
     
     # Handling missing values in the "point" column
     try:
-        df[["latitude", "longitude"]] = pd.DataFrame(
+        df[["latitude", "longitude", "altitude"]] = pd.DataFrame(
             df["point"].tolist(), index=df.index
         )
     except ValueError:
         # Handle missing values by assigning NaN or appropriate values
-        df[["latitude", "longitude"]] = np.nan
+        df[["latitude", "longitude", "altitude"]] = np.nan
 
     df["location"] = df["location"].astype(str)  # Convert location column to string
     return df
