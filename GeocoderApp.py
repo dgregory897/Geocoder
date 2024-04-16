@@ -111,7 +111,7 @@ def main():
     if file is not None:
         file_extension = file.name.split('.')[-1].lower()
         if file_extension == 'csv':
-            df = pd.read_csv(file, low_memory=False, delimiter=[',',';'])
+            df = pd.read_csv(file, low_memory=False)
         elif file_extension in ['xls', 'xlsx']:
             df = pd.read_excel(file, engine='openpyxl')
         else:
