@@ -128,17 +128,16 @@ def main():
 
         cols = df.columns.tolist()
 
-        st.subheader("Please select how your addresses are structured")
+        st.subheader("Choose Address Columns from the Sidebar")
         st.info("Example correct address: 221 Baker Street, London, NW1 6XE")
 
-        if st.checkbox("Select if your addresses are formatted like the example above"):
-            st.subheader("From the dropdown, choose the column containing the addresses")
+        if st.checkbox("If your addresses are formatted like the example above"):
             df_address = choose_geocode_column(df)
             st.write(df_address["geocode_col"].head())
             geocoded_df = geocode(df_address)
             display_results(geocoded_df)
 
-        if st.checkbox("Select if addresses are broken up into multiple columns (e.g. street, city, postcode, country)"):
+        if st.checkbox("Tick if addresses are broken up into multiple columns (e.g. street, city, postcode, country)"):
             df_address = create_address_col(df)
             st.write(df_address["geocode_col"].head())
             geocoded_df = geocode(df_address)
