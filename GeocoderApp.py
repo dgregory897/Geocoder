@@ -37,7 +37,7 @@ def choose_geocode_column(df):
 
 def geocode(df):
     letters = string.ascii_lowercase
-    username = ''.join(random.choice(letters) for i in range(8))
+    username = 'APPv212'
     locator = Nominatim(user_agent=username)
     geocode = RateLimiter(locator.geocode, min_delay_seconds=2)
     df["location"] = df["geocode_col"].apply(geocode)
